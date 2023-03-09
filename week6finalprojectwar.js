@@ -31,15 +31,16 @@ function compareCards(a,b) {
     }
 }
 //console.log(compareCards(3,6));
-function player1Deal (data){
-    let player1Cards = [data.splice(0,26)];
-    return player1Cards;
-}
-function player2Deal (data){
-    let player2Cards = [data]
-    return player2Cards;
+// function player1Deal (data){
+//     let player1Cards = [data.splice(0,26)];
+//     return player1Cards;
+// }
+// function player2Deal (data){
+//     let player2Cards = [data]
+//     return player2Cards;
 
-}
+// }
+
 // let deck = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52];
 // console.log(player1(deck));
 // console.log(player2(deck));
@@ -50,9 +51,41 @@ function player2Deal (data){
 //   shuffleArray(arr);
 //   console.log(arr)
 
-function shuffleTheCards (data){
-    data.sort(() => Math.random() - 0.5);
+// function shuffleTheCards (data){
+//     data.sort(() => Math.random() - 0.5);
 
-}
+// }
 // shuffleTheCards(deck);
 // console.log(deck);
+// class Card
+//     constructor(face, value) {
+//         this.face = face;
+//         this.value = value;
+//     }
+  
+// }
+// let myCard = new Card ("A" ,13);
+// console.log(myCard);
+const hearts = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+const diamonds = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+const clubs = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+const spades = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+let deck = hearts.concat(diamonds, clubs, spades);
+    
+function shuffleTheCards (data){
+    data.sort(() => Math.random() - 0.5);
+}
+shuffleTheCards(deck);
+//console.log(deck);
+function player1Deal (data){
+    let player1Cards = [data.splice(0,26)];
+    return player1Cards;
+}
+function player2Deal (data){
+    let player2Cards = [data]
+    return player2Cards;
+}
+let playerOnesCards = player1Deal(deck);
+let playerTwosCards = player2Deal(deck);
+// console.log(playerOnesCards);
+// console.log(playerTwosCards);
