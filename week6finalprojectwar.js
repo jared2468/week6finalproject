@@ -23,69 +23,89 @@
 // create players
     // create a class for players
 
-function compareCards(a,b) {
-    if (a > b) {
-        return "player 1 wins";
-    } else {
-        return "player 2 wins"
+    class Card {
+        constructor (suit,value){
+            this.suit = suit;
+            this.value = value;
+        }
     }
-}
-//console.log(compareCards(3,6));
-// function player1Deal (data){
-//     let player1Cards = [data.splice(0,26)];
-//     return player1Cards;
-// }
-// function player2Deal (data){
-//     let player2Cards = [data]
-//     return player2Cards;
-
-// }
-
-// let deck = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52];
-// console.log(player1(deck));
-// console.log(player2(deck));
-// function shuffleArray(arr) {
-//     arr.sort(() => Math.random() - 0.5);
-//   }
-//   let arr = [1, 2, 3, 4, 5];
-//   shuffleArray(arr);
-//   console.log(arr)
-
-// function shuffleTheCards (data){
-//     data.sort(() => Math.random() - 0.5);
-
-// }
-// shuffleTheCards(deck);
-// console.log(deck);
-// class Card
-//     constructor(face, value) {
-//         this.face = face;
-//         this.value = value;
-//     }
-  
-// }
-// let myCard = new Card ("A" ,13);
-// console.log(myCard);
-const hearts = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-const diamonds = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-const clubs = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-const spades = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-let deck = hearts.concat(diamonds, clubs, spades);
     
-function shuffleTheCards (data){
-    data.sort(() => Math.random() - 0.5);
-}
-shuffleTheCards(deck);
-//console.log(deck);
-function player1Deal (data){
-    let player1Cards = [data.splice(0,26)];
-    return player1Cards;
-}
-function player2Deal (data){
-    let player2Cards = [data]
-    return player2Cards;
-}
-let playerOnesCards = player1Deal(deck);
-let playerTwosCards = player2Deal(deck);
-// console.log(playerOnesCards);
-// console.log(playerTwosCards);
+    class Deck {
+        constructor() {
+            this.cards = [];
+        }
+        createDeck() {
+            let suits = ["spades", "diamonds", "clubs", "hearts"];
+            let values = [2,3,4,5,6,7,8,9,10,11,12,13,14]; 
+            for(let i = 0; i < suits.length; i++){
+                for(let x = 0; x < values.length; x++){
+                    this.cards.push(new Card(suits[i],values[x]));
+                    }
+            }
+        }
+        // shuffleTheDeck(){
+        // 	cards.sort(() => Math.random() - 0.5);
+        // }
+        shuffleTheDeck(){
+            let location1, location2, tmp;
+            for (let i = 0; i < 1000; i++){
+                location1 = Math.floor((Math.random() * this.cards.length));  // gives a random card in the deck
+                location2 = Math.floor((Math.random() * this.cards.length));  // another random card in the deck
+                tmp = this.cards[location1];    
+                this.cards[location1] = this.cards[location2];
+                this.cards[location2] = tmp;
+            }
+        }
+    }
+    class Player{
+        constructor(name) {
+            this.playerName = name;
+            this.playercards = [];
+            this.playerScore = 0;
+        }
+    }
+    class GamePlay {
+        constructor(){
+            this.game = [];
+            this.players = [];
+            this.player1Points = 0;
+            this.player2Points = 0;
+        }
+        start(player1Name, player2Name) {
+            this.players.push(new Player(player1Name));
+            this.players.push(new Player(player2Name));
+            let a = new Deck();
+            a.createDeck();
+            a.shuffleTheDeck();
+            this.players[0].playerCards = a.cards.slice(0,26);
+            this.players[1].playerCards = a.cards.slice(26,52);
+            this.player1Points = 0;
+            this.player2Points = 0;
+        }
+        compare(){
+            for(let i = 0; i < 26; i++){
+                let player1Value = this.players[0].playerCards[i].value
+                let player2Value = this.players[1].playerCards[i].value
+                if(player1Value > player2Value){
+                    this.player1Points++
+                }
+                else if(player1Value < player2Value){
+                    this.player2Points++
+                }
+            }
+        }
+        endOfWar(){
+            console.log(`player 1 score: ${this.player1Points}`);
+            console.log(`player 2 score: ${this.player2Points}`);
+            if(this.player1Points > this.player2Points){
+                return "Player 1 wins!"
+            }
+            if(this.player1Points < this.player2Points){
+                return "Player 2 wins!"
+            }
+        }
+    }
+    let myGame = new GamePlay();
+    myGame.start('player 1', 'player 2');
+    myGame.compare();
+    console.log(myGame.endOfWar());
