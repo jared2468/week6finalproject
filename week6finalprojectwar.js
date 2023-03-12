@@ -23,18 +23,18 @@
 // create players
     // create a class for players
 
-    class Card {
-        constructor (suit,value){
-            this.suit = suit;
-            this.value = value;
+    class Card { // created a class of cards 
+        constructor (suit,value){ // constructor using suit and value for the parameters
+            this.suit = suit; // set this suit to equal suit
+            this.value = value; // set to this value
         }
     }
     
-    class Deck {
-        constructor() {
+    class Deck { // declares class for the deck
+        constructor() { 
             this.cards = [];
         }
-        createDeck() {
+        createDeck() { // creates a deck by iterating through a for lop and push the suits and values into an array of objects
             let suits = ["spades", "diamonds", "clubs", "hearts"];
             let values = [2,3,4,5,6,7,8,9,10,11,12,13,14]; 
             for(let i = 0; i < suits.length; i++){
@@ -46,7 +46,7 @@
         // shuffleTheDeck(){
         // 	cards.sort(() => Math.random() - 0.5);
         // }
-        shuffleTheDeck(){
+        shuffleTheDeck(){ // used for loop and math.ramdom to move swap cards between locations created a shuffled deck
             let location1, location2, tmp;
             for (let i = 0; i < 1000; i++){
                 location1 = Math.floor((Math.random() * this.cards.length));  // gives a random card in the deck
@@ -57,44 +57,47 @@
             }
         }
     }
-    class Player{
+    class Player{ // declare Player class, holds name, cards array, and score
         constructor(name) {
             this.playerName = name;
             this.playercards = [];
             this.playerScore = 0;
         }
     }
-    class GamePlay {
+    class GamePlay { // class for game play 
         constructor(){
-            this.game = [];
-            this.players = [];
-            this.player1Points = 0;
-            this.player2Points = 0;
+            this.game = []; // game array
+            this.players = []; // players array
+            this.player1Points = 0; // holds player ones points
+            this.player2Points = 0; // holds player two points
         }
-        start(player1Name, player2Name) {
+        start(player1Name, player2Name) { // function to start the play
             this.players.push(new Player(player1Name));
             this.players.push(new Player(player2Name));
             let a = new Deck();
             a.createDeck();
             a.shuffleTheDeck();
-            this.players[0].playerCards = a.cards.slice(0,26);
-            this.players[1].playerCards = a.cards.slice(26,52);
-            this.player1Points = 0;
-            this.player2Points = 0;
+            this.players[0].playerCards = a.cards.slice(0,26); // deals 26 cards to player one
+            this.players[1].playerCards = a.cards.slice(26,52); // deals 26 cards to player two
+            this.player1Points = 0; // sets player ones points to 0
+            this.player2Points = 0; // sets player two points to 0
+            console.log(this.players[0].playerCards); // log players cards
+            console.log(this.players[1].playerCards);
         }
-        compare(){
-            for(let i = 0; i < 26; i++){
+    
+        compare(){ // compare card and return the winner
+            for(let i = 0; i < 26; i++){ // for loop to iterate through the cards
                 let player1Value = this.players[0].playerCards[i].value
                 let player2Value = this.players[1].playerCards[i].value
-                if(player1Value > player2Value){
-                    this.player1Points++
+                if(player1Value > player2Value){ // compares the card values between players
+                    this.player1Points++ // add point to player 1 if greater than
                 }
-                else if(player1Value < player2Value){
-                    this.player2Points++
+                else if(player1Value < player2Value){ // compares the card values 
+                    this.player2Points++ // adds point to player 2 if less than 
                 }
             }
         }
-        endOfWar(){
+        endOfWar(){ // after the came has completed log the players points, compare points, and declare the winner
             console.log(`player 1 score: ${this.player1Points}`);
             console.log(`player 2 score: ${this.player2Points}`);
             if(this.player1Points > this.player2Points){
@@ -106,6 +109,6 @@
         }
     }
     let myGame = new GamePlay();
-    myGame.start('player 1', 'player 2');
-    myGame.compare();
-    console.log(myGame.endOfWar());
+    myGame.start('player 1', 'player 2'); // executes the start of the game of war
+    myGame.compare(); // execute compare
+    console.log(myGame.endOfWar()); // log the winner
